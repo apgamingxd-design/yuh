@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2162,7 +2163,23 @@
   (function() {
     const audio = new Audio('make-me-franky-rizardo-remix.mp3');
     audio.loop = true;
-    audio.volume = 0.45;
+    audio.volume = 0.75;
+
+    // Autoplay as soon as the user interacts with the page (browser requires a gesture)
+    function tryAutoplay() {
+      audio.play().then(() => {
+        setPlaying(true);
+        document.removeEventListener('click', tryAutoplay);
+        document.removeEventListener('keydown', tryAutoplay);
+        document.removeEventListener('scroll', tryAutoplay);
+      }).catch(() => {});
+    }
+    // Try immediately, fallback to first interaction
+    audio.play().then(() => setPlaying(true)).catch(() => {
+      document.addEventListener('click', tryAutoplay);
+      document.addEventListener('keydown', tryAutoplay);
+      document.addEventListener('scroll', tryAutoplay);
+    });
 
     const player = document.getElementById('music-player');
     const toggle = document.getElementById('music-toggle');
