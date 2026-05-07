@@ -4,17 +4,7 @@
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-module.exports = async function handler(req, res) {
-  // CORS headers (needed if frontend is on a different domain)
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
+export default async function handler(req, res) {
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -25,9 +15,9 @@ module.exports = async function handler(req, res) {
 
     // ── Pricing catalog (keep in sync with frontend CATALOG) ──────────────
     const PRICES = {
-      website:     { amount: 40000, name: 'Custom Website',      type: 'one_time'  }, // $400
-      chatbot:     { amount: 20000, name: 'AI Chatbot / Agent',  type: 'one_time'  }, // $200
-      maintenance: { amount: 10000, name: 'Monthly Maintenance', type: 'recurring' }, // $100/mo
+      website:     { amount: 40000, name: 'Custom Website',     type: 'one_time'  }, // $400 in cents
+      chatbot:     { amount: 20000, name: 'AI Chatbot / Agent', type: 'one_time'  }, // $200 in cents
+      maintenance: { amount: 10000, name: 'Monthly Maintenance',type: 'recurring' }, // $100/mo in cents
     };
 
     // Validate items
@@ -38,12 +28,7 @@ module.exports = async function handler(req, res) {
       if (!PRICES[id]) return res.status(400).json({ error: `Unknown item: ${id}` });
     }
 
-    // Validate email
-    if (!email || !email.includes('@')) {
-      return res.status(400).json({ error: 'Valid email is required' });
-    }
-
-    const oneTimeItems   = items.filter(id => PRICES[id].type === 'one_time');
+    const oneTimeItems  = items.filter(id => PRICES[id].type === 'one_time');
     const recurringItems = items.filter(id => PRICES[id].type === 'recurring');
 
     // ── Create or retrieve Stripe Customer ────────────────────────────────
@@ -60,7 +45,7 @@ module.exports = async function handler(req, res) {
 
     // ── One-time payment (PaymentIntent) ──────────────────────────────────
     if (oneTimeItems.length > 0) {
-      const amount      = oneTimeItems.reduce((sum, id) => sum + PRICES[id].amount, 0);
+      const amount = oneTimeItems.reduce((sum, id) => sum + PRICES[id].amount, 0);
       const description = oneTimeItems.map(id => PRICES[id].name).join(', ');
 
       const paymentIntent = await stripe.paymentIntents.create({
@@ -79,8 +64,10 @@ module.exports = async function handler(req, res) {
       paymentIntentClientSecret = paymentIntent.client_secret;
     }
 
-    // ── Recurring subscription ─────────────────────────────────────────────
+    // ── Recurring subscription (Subscription) ─────────────────────────────
     if (recurringItems.length > 0) {
+      // Create a Price object on the fly for each recurring item
+      // (or use pre-created Price IDs from your Stripe dashboard)
       const subscriptionItems = await Promise.all(
         recurringItems.map(async (id) => {
           const price = await stripe.prices.create({
@@ -100,13 +87,14 @@ module.exports = async function handler(req, res) {
         payment_settings: { save_default_payment_method: 'on_subscription' },
         expand: ['latest_invoice.payment_intent'],
         metadata: { items: recurringItems.join(',') },
-        trial_period_days: 30,
+        trial_period_days: 30, // first month free (billing starts next month)
       });
 
       subscriptionClientSecret =
         subscription.latest_invoice.payment_intent.client_secret;
     }
 
+    // Return both secrets to the frontend (null if not applicable)
     return res.status(200).json({
       paymentIntentClientSecret,
       subscriptionClientSecret,
@@ -117,4 +105,4 @@ module.exports = async function handler(req, res) {
     console.error('Stripe error:', err);
     return res.status(500).json({ error: err.message });
   }
-};
+}
