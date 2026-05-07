@@ -1797,6 +1797,20 @@
   </footer>
 </div>
 
+  <!-- ══ MUSIC PLAYER ══ -->
+  <div id="music-player" aria-label="Background music player">
+    <button id="music-toggle" title="Play / Pause music">
+      <span class="music-icon">♪</span>
+    </button>
+    <div id="music-info">
+      <div id="music-track-name">Make Me</div>
+      <div id="music-artist">Franky Rizardo Remix</div>
+      <div id="music-bars">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
 <script>
   // ══ CURSOR GLOW ══
   document.addEventListener('mousemove', e => {
@@ -2163,7 +2177,6 @@
       player.classList.toggle('playing', playing);
     }
 
-    // Expand on hover, collapse after delay
     player.addEventListener('mouseenter', () => {
       clearTimeout(expandTimer);
       player.classList.add('expanded');
@@ -2182,19 +2195,6 @@
     });
   })();
 </script>
-  <!-- ══ MUSIC PLAYER ══ -->
-  <div id="music-player" aria-label="Background music player">
-    <button id="music-toggle" title="Play / Pause music">
-      <span class="music-icon">♪</span>
-    </button>
-    <div id="music-info">
-      <div id="music-track-name">Make Me</div>
-      <div id="music-artist">Franky Rizardo Remix</div>
-      <div id="music-bars">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-    </div>
-  </div>
 
 </body>
 </html>
