@@ -906,6 +906,22 @@
       font-size: 0.78rem; color: var(--muted); font-weight: 300; line-height: 1.6;
     }
     .payment-notice strong { color: var(--gold); font-weight: 600; }
+
+    /* ══ OWNERS PAGE ══ */
+    .owners-page { padding: 150px 8vw 7rem; }
+    .owners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2px; background: var(--border); margin-top: 4rem; }
+    .owner-card { background: var(--surface); overflow: hidden; transition: background 0.3s; position: relative; }
+    .owner-card:hover { background: var(--surface2); }
+    .owner-photo { width: 100%; height: 480px; object-fit: cover; object-position: top; display: block; filter: grayscale(15%); transition: filter 0.4s; }
+    .owner-card:hover .owner-photo { filter: grayscale(0%); }
+    .owner-info { padding: 2rem 2.5rem 2.5rem; border-top: 1px solid var(--border); }
+    .owner-tag { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+    .owner-name { font-family: var(--heading); font-size: 1.8rem; font-weight: 400; margin-bottom: 0.4rem; }
+    .owner-title { color: var(--muted); font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 1.2rem; }
+    .owner-bio { color: var(--muted); font-size: 0.85rem; line-height: 1.85; font-weight: 300; }
+    .owner-fun-fact { margin-top: 1.5rem; padding: 1rem 1.2rem; background: var(--bg); border-left: 2px solid var(--gold); font-size: 0.82rem; color: var(--muted); font-style: italic; font-family: var(--heading); font-size: 0.95rem; }
+    .owner-credentials { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.5rem; }
+    .cred-pill { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); color: var(--gold); font-size: 0.58rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; }
   </style>
 </head>
 <body>
@@ -927,6 +943,7 @@
     <li><a href="#" onclick="showPage('courses')" id="nav-courses">Courses</a></li>
     <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
     <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a href="#" onclick="showPage('owners')" id="nav-owners">Meet the Owners</a></li>
     <li><a href="#" onclick="showPage('checkout')" id="nav-checkout" class="nav-cta">Buy Now</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleNav()">
@@ -1078,13 +1095,36 @@
       </div>
       <div class="testimonial-card reveal d3">
         <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"I took their AI course and had my first chatbot running on my own site in two days. The level of detail in the content is impressive."</p>
+        <p class="testimonial-text">
+      "I took their AI course and had my first chatbot running on my own site in two days. The level of detail in the content is impressive."
+      </p>
         <div class="testimonial-author">
           <div class="author-avatar">DK</div>
           <div><div class="author-name">Derek K.</div><div class="author-role">Freelance Developer</div></div>
         </div>
       </div>
     </div>
+  </section>
+
+
+  <!-- ══ OWNERS TEASER ══ -->
+  <section style="background:var(--surface);padding:5rem 8vw;border-top:1px solid var(--border);text-align:center;">
+    <div class="section-tag reveal" style="justify-content:center;">The Brains Behind It All</div>
+    <h2 class="section-title reveal d1" style="margin-bottom:0.8rem;">We look <span class="gold">exactly</span> as professional<br>as you'd expect.</h2>
+    <p class="reveal d2" style="color:var(--muted);font-size:0.88rem;margin-bottom:3rem;font-weight:300;max-width:480px;margin-left:auto;margin-right:auto;">Two guys. One school hallway. Unlimited potential (and one very signed shirt).</p>
+    <div class="reveal d3" style="display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <div style="text-align:left;max-width:200px;">
+        <div style="width:200px;height:38px;background:var(--bg);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem;font-size:0.6rem;letter-spacing:2px;color:var(--gold);font-weight:700;">CO-FOUNDER I</div>
+        <div style="font-family:var(--heading);font-size:1.3rem;font-weight:400;margin-bottom:0.3rem;">The Headphones Guy</div>
+        <div style="color:var(--muted);font-size:0.75rem;font-weight:300;">"CEO of vibes. Rarely removes headphones during meetings. Has never been seen without grey sweatpants."</div>
+      </div>
+      <div style="text-align:left;max-width:200px;">
+        <div style="width:200px;height:38px;background:var(--bg);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem;font-size:0.6rem;letter-spacing:2px;color:var(--gold);font-weight:700;">CO-FOUNDER II</div>
+        <div style="font-family:var(--heading);font-size:1.3rem;font-weight:400;margin-bottom:0.3rem;">The Signed Shirt Guy</div>
+        <div style="color:var(--muted);font-size:0.75rem;font-weight:300;">"Wore his goodbye shirt for the entire school day. Somehow has 30+ signatures. Still smiling about it."</div>
+      </div>
+    </div>
+    <button class="btn-secondary reveal d4" onclick="showPage('owners')" style="font-size:0.68rem;">See the Real Photos (you've been warned) →</button>
   </section>
 
   <!-- CTA -->
@@ -1695,6 +1735,98 @@
   </footer>
 </div>
 
+
+<!-- ══════════════════════════════════
+     PAGE: MEET THE OWNERS
+══════════════════════════════════ -->
+<div class="page" id="page-owners">
+  <div class="owners-page">
+    <div class="section-tag reveal">The Inner Circle</div>
+    <h1 class="section-title reveal d1" style="font-size:clamp(2.5rem,5vw,5rem);">
+      Meet the <span class="gold">Masterminds</span><br>(we use that word loosely)
+    </h1>
+    <p style="color:var(--muted);font-size:0.9rem;font-weight:300;line-height:1.9;max-width:600px;" class="reveal d2">
+      Two young entrepreneurs who decided a school hallway was the perfect backdrop for a company photoshoot. We stand by it. Also, yes — those are real clients' signatures on that shirt.
+    </p>
+
+    <div class="owners-grid">
+      <!-- Owner 1 -->
+      <div class="owner-card reveal d2">
+        <img class="owner-photo" src="images/owner1.JPG" alt="Owner 1">
+        <div class="owner-info">
+          <div class="owner-tag">✦ Co-Founder &amp; Chief Vibe Officer</div>
+          <div class="owner-name">The Headphones Guy</div>
+          <div class="owner-title">Strategy · Operations · Looking Cool</div>
+          <p class="owner-bio">
+            A natural-born entrepreneur who conducts 90% of business meetings with headphones on. 
+            Rumored to be listening to lo-fi beats at all times, including during client calls. 
+            Grey sweatpants are his power suit. Despite appearances, he writes exceptionally clean code.
+          </p>
+          <div class="owner-fun-fact">
+            "I don't always take my headphones off. But when I do, it means we're closing a deal."
+          </div>
+          <div class="owner-credentials">
+            <span class="cred-pill">🎧 Headphones On 24/7</span>
+            <span class="cred-pill">Grey Sweatpants Loyalist</span>
+            <span class="cred-pill">UI / UX</span>
+            <span class="cred-pill">Shark Hoodie Enthusiast</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Owner 2 -->
+      <div class="owner-card reveal d3">
+        <img class="owner-photo" src="images/owner2.JPG" alt="Owner 2">
+        <div class="owner-info">
+          <div class="owner-tag">✦ Co-Founder &amp; Chief Enthusiasm Officer</div>
+          <div class="owner-name">The Signed Shirt Guy</div>
+          <div class="owner-title">Development · Sales · Having a Great Time</div>
+          <p class="owner-bio">
+            Wore a white t-shirt to school one day and had the audacity to let everyone sign it. 
+            Walked around the entire day collecting autographs. The shirt now has 30+ signatures 
+            and lives rent-free in our company lore. Somehow this is the same person who built 
+            our entire AI backend. We don't question it.
+          </p>
+          <div class="owner-fun-fact">
+            "The shirt wasn't a bit. It was a networking event. I have 34 new contacts now."
+          </div>
+          <div class="owner-credentials">
+            <span class="cred-pill">✍️ 34 Signatures & Counting</span>
+            <span class="cred-pill">AI Architecture</span>
+            <span class="cred-pill">Backend Dev</span>
+            <span class="cred-pill">Certified People Person</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Together section -->
+    <div style="margin-top:6rem;padding:3.5rem;background:var(--surface);border:1px solid var(--border);position:relative;overflow:hidden;" class="reveal">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+      <div class="section-tag" style="margin-bottom:1rem;">Together, Though</div>
+      <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:1rem;">Surprisingly, we <span class="gold">know what we're doing.</span></h2>
+      <p style="color:var(--muted);font-size:0.88rem;font-weight:300;line-height:1.9;max-width:680px;margin-bottom:2rem;">
+        Jokes aside — between us we have real experience in web development, AI integration, UI design, 
+        and helping small businesses get online. We started JEM because we saw too many great businesses 
+        stuck with bad (or no) websites. We're fixing that, one signed hallway photo at a time.
+      </p>
+      <div style="display:flex;gap:1.2rem;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="showPage('services')">See What We Build</button>
+        <button class="btn-secondary" onclick="showPage('contact')">Hire Us Anyway</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 JEM Web Design. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('services')">Services</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+    </div>
+  </footer>
+</div>
+
 <script>
   // ══ CURSOR GLOW ══
   document.addEventListener('mousemove', e => {
@@ -1706,7 +1838,10 @@
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
+    const page = document.getElementById('page-' + name);
+    if (page) {
+    page.classList.add('active');
+    }
     const navEl = document.getElementById('nav-' + name);
     if (navEl) navEl.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
